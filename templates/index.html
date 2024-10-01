@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Electricity Price Prediction</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            height: 100vh;
+        }
+
+        .container {
+            display: flex;
+            height: 100%;
+        }
+
+        .left-panel {
+            flex: 2;
+            background-color: #ffffff;
+            padding: 30px;
+        }
+
+        .right-panel {
+            flex: 1;
+            background-color: #007bff;
+            color: white;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        h1 {
+            color: white;
+            margin-bottom: 30px;
+        }
+
+        .form-control {
+            margin-bottom: 15px;
+        }
+
+        .prediction {
+            font-size: 24px;
+            margin-top: 20px;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background-color: #0056b3;
+            border: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="left-panel">
+            <h1 class="text-center">Predict Your Electricity Price</h1>
+            <form action="/predict" method="post">
+                <div class="form-group">
+                    <label for="Holiday">Holiday:</label>
+                    <select class="form-control" id="Holiday" name="Holiday">
+                        <option value="None">None</option>
+                        <option value="Christmas">Christmas</option>
+                        <option value="New Year">New Year's Day</option>
+                        <option value="St Stephen's Day">St Stephen's Day</option>
+                        <option value="Christmas Eve">Christmas Eve</option>
+                        <option value="St Patrick's Day">St Patrick's Day</option>
+                        <option value="Good Friday">Good Friday</option>
+                        <option value="Holy Saturday">Holy Saturday</option>
+                        <option value="Easter">Easter</option>
+                        <option value="Easter Monday">Easter Monday</option>
+                        <option value="May Day">May Day</option>
+                        <option value="June Bank Holiday">June Bank Holiday</option>
+                        <option value="August Bank Holiday">August Bank Holiday</option>
+                        <option value="October Bank Holiday">October Bank Holiday</option>
+                    </select>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="ForecastWindProduction">Forecast Wind Production:</label>
+                        <input type="text" class="form-control" id="ForecastWindProduction"
+                            name="ForecastWindProduction" required>
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <label for="SystemLoadEA">System Load EA:</label>
+                        <input type="text" class="form-control" id="SystemLoadEA" name="SystemLoadEA" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="SMPEA">SMPEA:</label>
+                        <input type="text" class="form-control" id="SMPEA" name="SMPEA" required>
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <label for="ORKTemperature">ORK Temperature:</label>
+                        <input type="text" class="form-control" id="ORKTemperature" name="ORKTemperature" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="ORKWindspeed">ORK Windspeed:</label>
+                        <input type="text" class="form-control" id="ORKWindspeed" name="ORKWindspeed" required>
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <label for="CO2Intensity">CO2 Intensity:</label>
+                        <input type="text" class="form-control" id="CO2Intensity" name="CO2Intensity" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="ActualWindProduction">Actual Wind Production:</label>
+                        <input type="text" class="form-control" id="ActualWindProduction" name="ActualWindProduction"
+                            required>
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <label for="SystemLoadEP2">System Load EP2:</label>
+                        <input type="text" class="form-control" id="SystemLoadEP2" name="SystemLoadEP2" required>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-block">Predict</button>
+            </form>
+        </div>
+        <div class="right-panel">
+            <h1>Electricity Bill Predictor</h1>
+            {% if prediction_text %}
+            <div class="prediction">Your expected bill is: {{ prediction_text }}</div>
+            {% endif %}
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>
